@@ -10,9 +10,9 @@ export default class Book extends Component {
               className="book-cover"
               style={{
                 width: 128,
-                height: 193,
+                height: 192,
                 backgroundImage:
-                  'url("http://books.google.com/books/content?id=PGR2AwAAQBAJ&printsec=frontcover&img=1&zoom=1&imgtk=AFLRE73-GnPVEyb7MOCxDzOYF1PTQRuf6nCss9LMNOSWBpxBrz8Pm2_mFtWMMg_Y1dx92HT7cUoQBeSWjs3oEztBVhUeDFQX6-tWlWz1-feexS0mlJPjotcwFqAg6hBYDXuK_bkyHD-y&source=gbs_api")',
+                  'url("http://books.google.com/books/content?id=pD6arNyKyi8C&printsec=frontcover&img=1&zoom=1&imgtk=AFLRE70Rw0CCwNZh0SsYpQTkMbvz23npqWeUoJvVbi_gXla2m2ie_ReMWPl0xoU8Quy9fk0Zhb3szmwe8cTe4k7DAbfQ45FEzr9T7Lk0XhVpEPBvwUAztOBJ6Y0QPZylo4VbB7K5iRSk&source=gbs_api")',
               }}
             />
             <div className="book-shelf-changer">
@@ -27,8 +27,8 @@ export default class Book extends Component {
               </select>
             </div>
           </div>
-          <div className="book-title">To Kill a Mockingbird</div>
-          <div className="book-authors">Harper Lee</div>
+          <div className="book-title">The Hobbit</div>
+          <div className="book-authors">J.R.R. Tolkien</div>
         </div>
       </li>
     );
