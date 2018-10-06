@@ -1,6 +1,16 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 
 export default class Book extends Component {
+  static propTypes = {
+    book: PropTypes.object.isRequired,
+    updateBook: PropTypes.func.isRequired,
+  };
+
+  handleChange = e => {
+    this.props.updateBook(this.props.book, e.target.value);
+  };
+
   render() {
     return (
       <li>
@@ -11,12 +21,16 @@ export default class Book extends Component {
               style={{
                 width: 128,
                 height: 192,
-                backgroundImage:
-                  'url("http://books.google.com/books/content?id=pD6arNyKyi8C&printsec=frontcover&img=1&zoom=1&imgtk=AFLRE70Rw0CCwNZh0SsYpQTkMbvz23npqWeUoJvVbi_gXla2m2ie_ReMWPl0xoU8Quy9fk0Zhb3szmwe8cTe4k7DAbfQ45FEzr9T7Lk0XhVpEPBvwUAztOBJ6Y0QPZylo4VbB7K5iRSk&source=gbs_api")',
+                backgroundImage: `url("${(this.props.book.imageLinks &&
+                  this.props.book.imageLinks.thumbnail) ||
+                  ''}")`,
               }}
             />
             <div className="book-shelf-changer">
-              <select>
+              <select
+                value={this.props.book.shelf || 'none'}
+                onChange={this.handleChange}
+              >
                 <option value="move" disabled>
                   Move to...
                 </option>
@@ -27,8 +41,12 @@ export default class Book extends Component {
               </select>
             </div>
           </div>
-          <div className="book-title">The Hobbit</div>
-          <div className="book-authors">J.R.R. Tolkien</div>
+          <div className="book-title">
+            {this.props.book.title || 'No title'}
+          </div>
+          <div className="book-authors">
+            {this.props.book.authors[0] || 'No author'}
+          </div>
         </div>
       </li>
     );
