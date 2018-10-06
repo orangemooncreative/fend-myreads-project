@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
-import * as BooksAPI from './BooksAPI';
-import './App.css';
+import { getAll, update } from './BooksAPI';
 import BookShelf from './components/BookShelf';
+import SearchButton from './components/SearchButton';
+import './App.css';
 
 export default class BooksApp extends Component {
   state = {
@@ -10,7 +10,7 @@ export default class BooksApp extends Component {
   };
 
   componentDidMount = () => {
-    BooksAPI.getAll().then(res => {
+    getAll().then(res => {
       this.setState({
         books: res,
       });
@@ -18,7 +18,7 @@ export default class BooksApp extends Component {
   };
 
   updateBook = (book, shelf) => {
-    BooksAPI.update(book, shelf).then(() => {
+    update(book, shelf).then(() => {
       book.shelf = shelf;
       this.setState(state => ({
         books: state.books.filter(b => b.id !== book.id).concat([book]),
@@ -27,6 +27,7 @@ export default class BooksApp extends Component {
   };
 
   render() {
+    const { books } = this.state;
     return (
       <div className="app">
         <div className="list-books">
@@ -37,26 +38,22 @@ export default class BooksApp extends Component {
             <div>
               <BookShelf
                 name="Currently Reading"
-                books={this.state.books.filter(
-                  b => b.shelf === 'currentlyReading'
-                )}
+                books={books.filter(b => b.shelf === 'currentlyReading')}
                 updateBook={this.updateBook}
               />
               <BookShelf
                 name="Want To Read"
-                books={this.state.books.filter(b => b.shelf === 'wantToRead')}
+                books={books.filter(b => b.shelf === 'wantToRead')}
                 updateBook={this.updateBook}
               />
               <BookShelf
                 name="Read"
-                books={this.state.books.filter(b => b.shelf === 'read')}
+                books={books.filter(b => b.shelf === 'read')}
                 updateBook={this.updateBook}
               />
             </div>
           </div>
-          <div className="open-search">
-            <Link to="/search">Add a book</Link>
-          </div>
+          <SearchButton />
         </div>
       </div>
     );

@@ -10,12 +10,13 @@ export default class BookShelf extends Component {
   };
 
   render() {
+    const { name, books } = this.props;
     return (
       <div className="bookshelf">
-        <h2 className="bookshelf-title">{this.props.name}</h2>
+        <h2 className="bookshelf-title">{name}</h2>
         <div className="bookshelf-books">
           <ol className="books-grid">
-            {this.props.books.map((book, key) => (
+            {books.map((book, key) => (
               <Book key={key} book={book} updateBook={this.props.updateBook} />
             ))}
           </ol>

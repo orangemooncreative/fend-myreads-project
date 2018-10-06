@@ -7,11 +7,18 @@ export default class Book extends Component {
     updateBook: PropTypes.func.isRequired,
   };
 
-  handleChange = e => {
-    this.props.updateBook(this.props.book, e.target.value);
+  handleChange = async e => {
+    try {
+      const query = e.target.value;
+      const { book } = this.props;
+      await this.props.updateBook(book, query);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   render() {
+    const { book } = this.props;
     return (
       <li>
         <div className="book">
@@ -21,16 +28,13 @@ export default class Book extends Component {
               style={{
                 width: 128,
                 height: 192,
-                backgroundImage: `url("${(this.props.book.imageLinks &&
-                  this.props.book.imageLinks.thumbnail) ||
+                backgroundImage: `url("${(book.imageLinks &&
+                  book.imageLinks.thumbnail) ||
                   ''}")`,
               }}
             />
             <div className="book-shelf-changer">
-              <select
-                value={this.props.book.shelf || 'none'}
-                onChange={this.handleChange}
-              >
+              <select value={book.shelf || 'none'} onChange={this.handleChange}>
                 <option value="move" disabled>
                   Move to...
                 </option>
@@ -41,12 +45,8 @@ export default class Book extends Component {
               </select>
             </div>
           </div>
-          <div className="book-title">
-            {this.props.book.title || 'No title'}
-          </div>
-          <div className="book-authors">
-            {this.props.book.authors[0] || 'No author'}
-          </div>
+          <div className="book-title">{book.title || 'No title'}</div>
+          <div className="book-authors">{book.authors[0] || 'No author'}</div>
         </div>
       </li>
     );
