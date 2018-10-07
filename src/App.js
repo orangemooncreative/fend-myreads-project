@@ -9,13 +9,14 @@ export default class BooksApp extends Component {
     books: [],
   };
 
-  componentDidMount = () => {
-    getAll().then(res => {
-      this.setState({
-        books: res,
-      });
-    });
-  };
+  async componentDidMount() {
+    try {
+      const books = await getAll();
+      this.setState({ books });
+    } catch (error) {
+      console.log(error);
+    }
+  }
 
   updateBook = (book, shelf) => {
     update(book, shelf).then(() => {
@@ -28,6 +29,9 @@ export default class BooksApp extends Component {
 
   render() {
     const { books } = this.state;
+    const currentlyReading = books.filter(b => b.shelf === 'currentlyReading');
+    const wantToRead = books.filter(b => b.shelf === 'wantToRead');
+    const read = books.filter(b => b.shelf === 'read');
     return (
       <div className="app">
         <div className="list-books">
@@ -38,17 +42,17 @@ export default class BooksApp extends Component {
             <div>
               <BookShelf
                 name="Currently Reading"
-                books={books.filter(b => b.shelf === 'currentlyReading')}
+                books={currentlyReading}
                 updateBook={this.updateBook}
               />
               <BookShelf
                 name="Want To Read"
-                books={books.filter(b => b.shelf === 'wantToRead')}
+                books={wantToRead}
                 updateBook={this.updateBook}
               />
               <BookShelf
                 name="Read"
-                books={books.filter(b => b.shelf === 'read')}
+                books={read}
                 updateBook={this.updateBook}
               />
             </div>

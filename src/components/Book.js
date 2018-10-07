@@ -9,9 +9,9 @@ export default class Book extends Component {
 
   handleChange = async e => {
     try {
-      const query = e.target.value;
+      const shelf = e.target.value;
       const { book } = this.props;
-      await this.props.updateBook(book, query);
+      await this.props.updateBook(book, shelf);
     } catch (error) {
       console.log(error);
     }
@@ -46,7 +46,9 @@ export default class Book extends Component {
             </div>
           </div>
           <div className="book-title">{book.title || 'No title'}</div>
-          <div className="book-authors">{book.authors[0] || 'No author'}</div>
+          <div className="book-authors">
+            {(book.authors && book.authors[0]) || 'No author'}
+          </div>
         </div>
       </li>
     );
