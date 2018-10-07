@@ -4,16 +4,16 @@ import Book from '../Book';
 import { search, update, getAll } from '../../BooksAPI';
 
 export default class SearchPage extends Component {
+  // keep track of component state
   state = {
     query: '',
     books: [],
     res: [],
   };
 
-  // state = {
-  //   query: '',
-  //   books: [],
-  // };
+  // when the component is mounted to the page run the getAll function from
+  // the api in order to grab all of the books. set the state of the books from
+  // an empty array to what was pulled from the api. log any errors.
 
   async componentDidMount() {
     try {
@@ -24,6 +24,13 @@ export default class SearchPage extends Component {
     }
   }
 
+  // when the user search for a book by title or author in the input field,
+  // capture their query and update the state with the result.
+  // use that query to run the search function from the api.
+  // capture the result from the query and update the state with the result.
+  // loop over the results to find the book that was changed.
+  // move the book to the appropriate book shelf.
+  // handle any errors by resetting state or logging the error to the console.
   handleChange = async e => {
     try {
       const query = e.target.value;
@@ -50,26 +57,7 @@ export default class SearchPage extends Component {
     }
   };
 
-  // handleChange = async e => {
-  //   try {
-  //     const query = e.target.value;
-  //     this.setState({ query });
-
-  //     if (query.trim()) {
-  //       const res = await search(query);
-  //       if (res.error) {
-  //         this.setState({ books: [] });
-  //       } else {
-  //         this.setState({ books: res });
-  //       }
-  //     } else {
-  //       this.setState({ books: [] });
-  //     }
-  //   } catch (error) {
-  //     console.log(error);
-  //   }
-  // };
-
+  // update the book's shelf and state based on user input
   updateBook = (book, shelf) => {
     update(book, shelf).then(() => {
       book.shelf = shelf;
@@ -80,7 +68,7 @@ export default class SearchPage extends Component {
   };
 
   render() {
-    const { res, books } = this.state;
+    const { res } = this.state;
     return (
       <div className="search-books">
         <div className="search-books-bar">
@@ -88,6 +76,7 @@ export default class SearchPage extends Component {
             Close
           </Link>
           <div className="search-books-input-wrapper">
+            {/* capture user input and update state */}
             <input
               type="text"
               placeholder="Search by title or author"
@@ -98,6 +87,7 @@ export default class SearchPage extends Component {
         </div>
         <div className="search-books-results">
           <ol className="books-grid">
+            {/* map over the results and display the individual books */}
             {res.map((book, key) => (
               <Book key={key} book={book} updateBook={this.updateBook} />
             ))}

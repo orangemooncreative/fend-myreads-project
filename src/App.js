@@ -9,6 +9,9 @@ export default class BooksApp extends Component {
     books: [],
   };
 
+  // when the component is mounted to the page run the getAll function from
+  // the api in order to grab all of the books. set the state of the books from
+  // an empty array to what was pulled from the api. log any errors.
   async componentDidMount() {
     try {
       const books = await getAll();
@@ -18,6 +21,7 @@ export default class BooksApp extends Component {
     }
   }
 
+  // update the book's shelf and state based on user input and the filter method
   updateBook = (book, shelf) => {
     update(book, shelf).then(() => {
       book.shelf = shelf;
@@ -27,6 +31,9 @@ export default class BooksApp extends Component {
     });
   };
 
+  // filter the books based on the shelf prop
+  // display the book shelf components and place the filtered books on the appropriate shelf
+  // pass the updateBook prop to child component (Book)
   render() {
     const { books } = this.state;
     const currentlyReading = books.filter(b => b.shelf === 'currentlyReading');

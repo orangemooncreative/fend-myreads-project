@@ -2,11 +2,14 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
 export default class Book extends Component {
+  // run typechecking on the props for the component
   static propTypes = {
     book: PropTypes.object.isRequired,
     updateBook: PropTypes.func.isRequired,
   };
 
+  // move the books to different shelves based on user input by using
+  // the updateBook prop created in App.js to manage state
   handleChange = async e => {
     try {
       const shelf = e.target.value;
@@ -17,6 +20,8 @@ export default class Book extends Component {
     }
   };
 
+  // use props to populate the book content
+  // include error handling for empty states
   render() {
     const { book } = this.props;
     return (
